@@ -1,1 +1,3 @@
 For the moment, I'd like to keep the TAD concepts within this GitHub organization since I think it will work well to have us iteratively improve the platform while we're still the only agent using it. Accordingly, we need to flesh out much of the design spec, which is only preliminarily implemented in the Python interface. This relatively easily gets into formalizing the interface requirements and standards through tracks used on other Web3 systems for community consensus and documentation in the source repo.
+
+to be migrated from the `website` (team) policies
