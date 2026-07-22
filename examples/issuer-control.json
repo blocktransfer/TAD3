@@ -1,0 +1,66 @@
+{
+  "version": "1.0",
+  "revision": 1,
+  "issuer_id": "demo-corp-delaware",
+  "issuer_account": "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "distribution_account": "GBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+  "assets": ["DEMO"],
+  "agents": [
+    {
+      "agent_id": "blocktransfer-us",
+      "roles": ["responsible_ta"],
+      "appointment": {
+        "instrument_ref": "agreement:demo-corp:2026-07-22",
+        "effective_at": "2026-07-22T16:00:00Z"
+      },
+      "scopes": {
+        "actions": ["assess_investor", "authorize_trustline", "restrict_trustline", "restore_trustline", "review_transfer", "clawback", "manage_signers"],
+        "jurisdictions": ["US"]
+      },
+      "status": "active"
+    },
+    {
+      "agent_id": "rhein-register-de",
+      "roles": ["co_ta", "compliance_agent"],
+      "appointment": {
+        "instrument_ref": "co-agent-appointment:demo-corp:de:2026-07-22",
+        "effective_at": "2026-07-22T16:00:00Z",
+        "expires_at": "2027-07-22T16:00:00Z"
+      },
+      "scopes": {
+        "actions": ["assess_investor", "review_transfer"],
+        "jurisdictions": ["DE", "EU"]
+      },
+      "status": "active"
+    },
+    {
+      "agent_id": "continuity-ta-us",
+      "roles": ["recovery_agent"],
+      "appointment": {
+        "instrument_ref": "recovery-appointment:demo-corp:2026-07-22",
+        "effective_at": "2026-07-22T16:00:00Z"
+      },
+      "scopes": {
+        "actions": ["activate_recovery", "manage_signers"],
+        "jurisdictions": ["GLOBAL"]
+      },
+      "status": "active"
+    }
+  ],
+  "stellar_control": {
+    "master_weight": 1,
+    "thresholds": { "low": 2, "medium": 2, "high": 3 },
+    "signers": [
+      {
+        "agent_id": "blocktransfer-us",
+        "public_key": "GCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "weight": 2
+      },
+      {
+        "agent_id": "continuity-ta-us",
+        "public_key": "GDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+        "weight": 1
+      }
+    ]
+  }
+}

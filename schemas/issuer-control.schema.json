@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tad3.org/schemas/issuer-control.schema.json",
+  "title": "TAD3 issuer control record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "revision", "issuer_id", "issuer_account", "distribution_account", "assets", "agents", "stellar_control"],
+  "properties": {
+    "version": { "const": "1.0" },
+    "revision": { "type": "integer", "minimum": 1 },
+    "issuer_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "issuer_account": { "$ref": "#/$defs/stellarAccount" },
+    "distribution_account": { "$ref": "#/$defs/stellarAccount" },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9]{1,12}$" }
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/agent" },
+      "contains": {
+        "type": "object",
+        "properties": {
+          "roles": {
+            "type": "array",
+            "contains": { "const": "responsible_ta" }
+          }
+        },
+        "required": ["roles"]
+      },
+      "minContains": 1,
+      "maxContains": 1
+    },
+    "stellar_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["master_weight", "thresholds", "signers"],
+      "properties": {
+        "master_weight": { "$ref": "#/$defs/weight" },
+        "thresholds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["low", "medium", "high"],
+          "properties": {
+            "low": { "$ref": "#/$defs/weight" },
+            "medium": { "$ref": "#/$defs/weight" },
+            "high": { "$ref": "#/$defs/weight" }
+          }
+        },
+        "signers": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["agent_id", "public_key", "weight"],
+            "properties": {
+              "agent_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "public_key": { "$ref": "#/$defs/stellarAccount" },
+              "weight": { "$ref": "#/$defs/weight" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "stellarAccount": { "type": "string", "pattern": "^G[A-Z2-7]{55}$" },
+    "weight": { "type": "integer", "minimum": 0, "maximum": 255 },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "roles", "appointment", "scopes", "status"],
+      "properties": {
+        "agent_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["responsible_ta", "co_ta", "compliance_agent", "recovery_agent"] }
+        },
+        "appointment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["instrument_ref", "effective_at"],
+          "properties": {
+            "instrument_ref": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "effective_at": { "type": "string", "format": "date-time" },
+            "expires_at": { "type": "string", "format": "date-time" }
+          }
+        },
+        "scopes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["actions", "jurisdictions"],
+          "properties": {
+            "actions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "enum": ["assess_investor", "authorize_trustline", "restrict_trustline", "restore_trustline", "review_transfer", "clawback", "manage_signers", "activate_recovery"] }
+            },
+            "jurisdictions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "pattern": "^[A-Z]{2}$|^[A-Z]{2}-[A-Z0-9]{1,3}$|^EU$|^GLOBAL$" }
+            }
+          }
+        },
+        "status": { "enum": ["active", "suspended", "revoked", "expired"] }
+      }
+    }
+  }
+}

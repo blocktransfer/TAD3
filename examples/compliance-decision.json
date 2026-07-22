@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "decision_id": "5c124a76-d25c-44e7-9347-cb3ae8b053fb",
+  "issuer_id": "demo-corp-delaware",
+  "asset": "DEMO",
+  "subject_ref": "isr_7Hn2bC1V9Xw4kLm8Qa0PzR",
+  "subject_account": "GEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",
+  "requested_action": "authorize_trustline",
+  "decision": "approved",
+  "checks": [
+    { "type": "identity", "result": "pass", "policy_ref": "kyc-policy:4.2" },
+    { "type": "sanctions", "result": "pass", "policy_ref": "sanctions-policy:3.1" },
+    { "type": "residency", "result": "pass", "policy_ref": "demo-corp:eligible-jurisdictions:1" },
+    { "type": "accreditation", "result": "not_applicable", "policy_ref": "demo-offering:eligibility:2" }
+  ],
+  "jurisdictions": ["DE", "EU"],
+  "decided_by": {
+    "agent_id": "rhein-register-de",
+    "attestation_key_id": "did:web:rhein-register.example#compliance-2026"
+  },
+  "decided_at": "2026-07-22T16:30:00Z",
+  "expires_at": "2026-10-20T16:30:00Z",
+  "evidence_refs": [
+    {
+      "ref": "vault:review:01J1EXAMPLE8VX3R7D6T2M4",
+      "digest": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    }
+  ]
+}

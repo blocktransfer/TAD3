@@ -1,3 +1,15 @@
-For the moment, I'd like to keep the TAD concepts within this GitHub organization since I think it will work well to have us iteratively improve the platform while we're still the only agent using it. Accordingly, we need to flesh out much of the design spec, which is only preliminarily implemented in the Python interface. This relatively easily gets into formalizing the interface requirements and standards through tracks used on other Web3 systems for community consensus and documentation in the source repo.
+# TAD3 protocol
 
-to be migrated from the `website` (team) policies
+TAD3 is a working area for standards for direct, on-chain securities records administered by transfer agents. The protocol is being developed here while BlockTransfer is the initial operator, with the intention of making responsibilities and interfaces portable among participating agents.
+
+## Protocol proposals
+
+- [TIP-TBA: Federated co-transfer-agent and investor-compliance controls](tips/TIP-TBA-co-ta-investor-compliance.md)
+
+## Machine-readable artifacts
+
+- [`issuer-control.schema.json`](schemas/issuer-control.schema.json) describes an issuer-specific account, appointed agents, signer policy, and bounded authority.
+- [`compliance-decision.schema.json`](schemas/compliance-decision.schema.json) describes the minimum shared record for an investor-compliance decision without putting investor PII on-chain.
+- [`examples/`](examples) contains conforming sample records.
+
+These materials are technical and operational proposals. They do not determine whether a participant is acting as a transfer agent or satisfy any participant's legal, regulatory, or contractual obligations.
